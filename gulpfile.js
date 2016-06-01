@@ -11,6 +11,23 @@ var elixir = require('laravel-elixir');
  |
  */
 
+elixir.config.sourcemaps = false
+
 elixir(function(mix) {
-    mix.sass('app.scss');
-});
+	// Styles
+	mix.copy('bower_components/font-awesome/fonts', 'public/fonts')
+	mix.less([
+		'libs.less',
+		'app.less'
+	])
+
+	// Scripts
+	mix.copy('bower_components/jquery/dist/jquery.js', 'resources/assets/js/jquery.js')
+	mix.copy('bower_components/bootstrap/dist/js/bootstrap.js', 'resources/assets/js/bootstrap.js')
+	mix.scripts([
+		'jquery.js', 'bootstrap.js'
+	])
+
+	mix.version(['css/app.css', 'js/all.js'])
+
+})
