@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default navbar-static-top">
-	<div class="container">
+	<div class="container-fluid">
 		<div class="navbar-header">
 			<!-- Collapse -->
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main">
@@ -21,8 +21,8 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Militantes <span class="caret"></span></a>
 						<!-- militants menu -->
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#"> Ver lista</a></li>
-							<li><a href="#"> Capturar nuevo</a></li>
+							<li><a href="{{ route('militants') }}"> Ver lista</a></li>
+							<li><a href="{{ route('createMilitant') }}"> Capturar nuevo</a></li>
 						</ul>
 					</li>
 					<li class="dropdown">

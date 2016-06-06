@@ -25,6 +25,8 @@ Route::group(['as' => 'auth::', 'namespace' => 'Auth'], function() {
 
 Route::group(['middleware' => ['auth']], function() {
 	Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
+	Route::get('/militantes', ['as' => 'militants', 'uses' => 'MilitantController@index']);
+	Route::get('/militantes/nuevo', ['as' => 'createMilitant', 'uses' => 'MilitantController@create']);
 });
 
 /*Route::get('/', function () {

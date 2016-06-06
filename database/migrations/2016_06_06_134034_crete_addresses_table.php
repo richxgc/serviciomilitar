@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreteAdressesTable extends Migration
+class CreteAddressesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,15 @@ class CreteAdressesTable extends Migration
     public function up()
     {
         Schema::create('addresses', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->string('street')->nullable();
+            $table->string('number_exterior')->nullable();
+            $table->string('number_interior')->nullable();
+            $table->string('neighborhood')->nullable();
+            $table->string('city');
+            $table->string('state');
+            $table->string('country');
             $table->timestamps();
         });
     }

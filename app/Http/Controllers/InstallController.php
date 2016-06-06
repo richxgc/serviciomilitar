@@ -14,8 +14,7 @@ use App\Models\User;
 class InstallController extends Controller {
 	
 	public function index() {
-
-		return view('admin/install');
+		return view('admin.install');
 	}
 
 	public function makeInstall(Request $request) {
