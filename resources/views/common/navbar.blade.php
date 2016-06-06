@@ -17,7 +17,21 @@
 			<!-- Left side of navbar -->
 			<ul class="nav navbar-nav">
 				@if(Auth::user())
-					
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Militantes <span class="caret"></span></a>
+						<!-- militants menu -->
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#"> Ver lista</a></li>
+							<li><a href="#"> Capturar nuevo</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Formatos <span class="caret"></span></a>
+						<!-- formats menu -->
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#"> Cartilla militar</a></li>
+						</ul>
+					</li>
 				@endif
 			</ul>
 			<!-- Right side of navbar -->
@@ -29,7 +43,8 @@
 						</a>
 						<!-- Right dropdown -->
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i> Cerrar sesión</a></li>
+							<li><a href="#"> Cambiar contraseña</a></li>
+							<li><a href="{{ route('auth::logout') }}"> Cerrar sesión</a></li>
 						</ul>
 					</li>
 				@endif
