@@ -15,7 +15,7 @@ elixir.config.sourcemaps = false
 
 elixir(function(mix) {
 	// Styles
-	mix.copy('bower_components/font-awesome/fonts', 'public/fonts')
+	mix.copy('bower_components/font-awesome/fonts', 'public/build/fonts')
 	mix.less([
 		'libs.less',
 		'app.less'
@@ -24,8 +24,9 @@ elixir(function(mix) {
 	// Scripts
 	mix.copy('bower_components/jquery/dist/jquery.js', 'resources/assets/js/jquery.js')
 	mix.copy('bower_components/bootstrap/dist/js/bootstrap.js', 'resources/assets/js/bootstrap.js')
+	mix.copy('bower_components/pnotify/dist/pnotify.js', 'resources/assets/js/pnotify.js')
 	mix.scripts([
-		'jquery.js', 'bootstrap.js'
+		'jquery.js', 'bootstrap.js', 'pnotify.js', 'page.js'
 	])
 
 	mix.version(['css/app.css', 'js/all.js'])

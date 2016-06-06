@@ -11,10 +11,22 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group([], function() {
+	//Route::auth();
+	Route::get('/instalacion', ['as' => 'install', 'uses' => 'InstallController@index']);
+	Route::post('/instalacion', ['as' => 'makeInstall', 'uses' => 'InstallController@makeInstall']);
 });
 
-Route::auth();
+Route::group(['as' => 'auth::', 'namespace' => 'Auth'], function() {
+	Route::get('/login', ['as' => 'showLoginForm', 'uses' => 'AuthController@showLoginForm']);
+	Route::post('/login', ['as' => 'login', 'uses' => 'AuthController@login']);
+	Route::get('/logout', ['as' => 'logout', 'uses' => 'AuthController@logout']);
+});
 
-Route::get('/home', 'HomeController@index');
+Route::group(['middleware' => ['auth']], function() {
+	Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
+});
+
+/*Route::get('/', function () {
+    return view('welcome');
+});*/
