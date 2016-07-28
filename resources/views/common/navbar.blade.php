@@ -10,7 +10,7 @@
 			</button>
 			<!-- Branding -->
 			<a href="{{ route('home') }}" class="navbar-brand">
-				Formatos
+				Servicio Militar Nacional
 			</a>
 		</div>
 		<div class="collapse navbar-collapse" id="navbar-main">

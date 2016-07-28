@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateParentsTable extends Migration
+class CreateFamilyTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -12,13 +12,12 @@ class CreateParentsTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('parents', function (Blueprint $table) {
+		Schema::create('family', function (Blueprint $table) {
 			$table->engine = 'InnoDB';
 			$table->increments('id');
 			$table->string('first_name');
 			$table->string('last_name_a');
 			$table->string('last_name_b');
-			$table->string('type')->default('father');
 			$table->timestamps();
 		});
 	}
@@ -30,6 +29,6 @@ class CreateParentsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::drop('parents');
+		Schema::drop('family');
 	}
 }

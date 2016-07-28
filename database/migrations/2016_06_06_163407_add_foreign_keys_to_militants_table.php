@@ -13,8 +13,8 @@ class AddForeignKeysToMilitantsTable extends Migration
     public function up()
     {
         Schema::table('militants', function (Blueprint $table) {
-            $table->foreign('father_id')->references('id')->on('parents')->onDelete('cascade');
-            $table->foreign('mother_id')->references('id')->on('parents')->onDelete('cascade');
+            $table->foreign('father_id')->references('id')->on('family')->onDelete('cascade');
+            $table->foreign('mother_id')->references('id')->on('family')->onDelete('cascade');
             $table->foreign('born_id')->references('id')->on('addresses')->onDelete('cascade');
             $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
         });

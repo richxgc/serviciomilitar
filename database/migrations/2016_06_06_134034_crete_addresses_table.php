@@ -19,6 +19,7 @@ class CreteAddressesTable extends Migration
             $table->string('number_exterior')->nullable();
             $table->string('number_interior')->nullable();
             $table->string('neighborhood')->nullable();
+            $table->string('postal_code')->nullable();
             $table->string('city');
             $table->string('state');
             $table->string('country');

@@ -17,26 +17,48 @@
 		</div>
 		@else
 		<div class="col-md-12">
+			<h4><i class="fa fa-list"></i> Lista de militantes</h4>
+			<a href="{{ route('createMilitant') }}" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Capturar nuevo</a>
+		</div>
+		<div class="col-md-12">
+			<br>
 			<div class="table-responsive">
-				<table class="table table-bordered table-striped">
+				<table class="table table-bordered table-striped table-hover table-condensed">
 					<thead>
 						<tr>
+							<th>ID</th>
 							<th>Clase</th>
 							<th>Matricula</th>
 							<th>CURP</th>
+							<th>Nombre(s)</th>
+							<th>Apellido paterno</th>
+							<th>Apellido materno</th>
+							<th>Fecha de nacimiento</th>
+							<th>Cartilla</th>
+							<th>Ver / Editar</th>
+							<th>Eliminar</th>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach($response->militants as $militant)
 						<tr>
+							<td>{{ $militant->id }}</td>
 							<td>{{ $militant->class }}</td>
 							<td>{{ $militant->enrollment }}</td>
 							<td>{{ $militant->curp }}</td>
+							<td>{{ $militant->first_name }}</td>
+							<td>{{ $militant->last_name_a }}</td>
+							<td>{{ $militant->last_name_b }}</td>
+							<td>{{ $militant->birthday }}</td>
+							<td><a href="{{ route('printMilitaryId', ['id' => $militant->id]) }}" class="btn btn-default btn-block" target="_blank"><i class="fa fa-print"></i></a></td>
+							<td><a href="{{ route('editMilitant', ['id' => $militant->id]) }}" class="btn btn-default btn-block"><i class="fa fa-eye"></i></a></td>
+							<td><a href="{{ route('deleteMilitant', ['id' => $militant->id]) }}" class="btn btn-danger btn-block"><i class="fa fa-trash"></i></a></td>
 						</tr>
 						@endforeach
 					</tbody>
 				</table>
 			</div>
+			{{ $response->militants->links() }}
 		</div>
 		@endif
 	</div>

@@ -28,8 +28,8 @@ class CreteMilitantsTable extends Migration
 			$table->string('school_degree');
 			$table->integer('father_id')->unsigned()->nullable();
 			$table->integer('mother_id')->unsigned()->nullable();
-			$table->integer('born_id')->unsigned();
-			$table->integer('address_id')->unsigned();
+			$table->integer('born_id')->unsigned()->nullable();
+			$table->integer('address_id')->unsigned()->nullable();
 			$table->timestamps();
 		});
 	}

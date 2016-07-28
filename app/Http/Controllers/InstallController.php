@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Hash;
 use Validator;
-use Session;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
