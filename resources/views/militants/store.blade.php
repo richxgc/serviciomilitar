@@ -72,7 +72,7 @@
 									</div>
 									<div class="col-md-6">
 										<div class="form-group {{ $errors->has('city_born') ? ' has-error' : '' }}">
-											<label for="city_born">Ciudad de nacimiento<span class="text-danger">*</span></label>
+											<label for="city_born">Ciudad/Localidad de nacimiento<span class="text-danger">*</span></label>
 											<input type="text" name="city_born" id="city_born" class="form-control" value="{{ $response->militant->city_born or old('city_born') }}">
 											@if($errors->has('city_born'))
 											<span class="label label-danger">{{ $errors->first('city_born') }}</span>
@@ -153,7 +153,7 @@
 											@endif
 										</div>
 										<div class="form-group {{ $errors->has('neighborhood') ? ' has-error' : '' }}">
-											<label for="neighborhood">Colonia<span class="text-danger">*</span></label>
+											<label for="neighborhood">Colonia</label>
 											<input type="text" name="neighborhood" id="neighborhood" class="form-control" value="{{ $response->militant->neighborhood or old('neighborhood') }}">
 											@if($errors->has('neighborhood'))
 											<span class="label label-danger">{{ $errors->first('neighborhood') }}</span>
@@ -240,6 +240,34 @@
 							<input type="text" name="mother_last_name_b" id="mother_last_name_b" class="form-control" value="{{ $response->militant->mother_last_name_b or old('mother_last_name_b') }}">
 							@if($errors->has('mother_last_name_b'))
 							<span class="label label-danger">{{ $errors->first('mother_last_name_b') }}</span>
+							@endif
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">Expedición</div>
+					<div class="panel-body">
+						<div class="form-group {{ $errors->has('issue_place') ? ' has-error' : '' }}">
+							<label for="issue_place">Lugar donde se expide<span class="text-danger">*</span></label>
+							<input type="text" name="issue_place" id="issue_place" class="form-control" value="{{ $response->militant->issue_place or old('issue_place') }}">
+							@if($errors->has('issue_place'))
+							<span class="label label-danger">{{ $errors->first('issue_place') }}</span>
+							@endif
+						</div>
+						<div class="form-group {{ $errors->has('issue_date') ? ' has-error' : '' }}">
+							<label for="issue_date">Fecha de expedición<span class="text-danger">*</span></label>
+							<input type="text" name="issue_date" id="issue_date" class="form-control" value="{{ $response->militant->issue_date or old('issue_date') }}">
+							@if($errors->has('issue_date'))
+							<span class="label label-danger">{{ $errors->first('issue_date') }}</span>
+							@endif
+						</div>
+						<div class="form-group {{ $errors->has('issue_president') ? ' has-error' : '' }}">
+							<label for="issue_president">Presidente de la S.M. de R.<span class="text-danger">*</span></label>
+							<input type="text" name="issue_president" id="issue_president" class="form-control" value="{{ $response->militant->issue_president or old('issue_president') }}">
+							@if($errors->has('issue_president'))
+							<span class="label label-danger">{{ $errors->first('issue_president') }}</span>
 							@endif
 						</div>
 					</div>

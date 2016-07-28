@@ -26,6 +26,9 @@ class CreteMilitantsTable extends Migration
 			$table->string('occupation');
 			$table->string('literate');
 			$table->string('school_degree');
+			$table->string('issue_place');
+			$table->string('issue_date');
+			$table->string('issue_president');
 			$table->integer('father_id')->unsigned()->nullable();
 			$table->integer('mother_id')->unsigned()->nullable();
 			$table->integer('born_id')->unsigned()->nullable();

@@ -25,6 +25,8 @@ Route::group(['as' => 'auth::', 'namespace' => 'Auth'], function() {
 
 Route::group(['middleware' => ['auth']], function() {
 	Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
+	// Administration
+	Route::match(['get', 'post'], '/opciones/cambiar-contrasena', ['as' => 'changePassword', 'uses' => 'AdminController@changePassword']);
 	// Militants
 	Route::get('/militantes', ['as' => 'militants', 'uses' => 'MilitantController@index']);
 	Route::get('/militantes/nuevo', ['as' => 'createMilitant', 'uses' => 'MilitantController@create']);
@@ -34,7 +36,3 @@ Route::group(['middleware' => ['auth']], function() {
 	// Documents
 	Route::get('/documento/cartilla/{id}', ['as' => 'printMilitaryId', 'uses' => 'DocumentController@printMilitaryId']);
 });
-
-/*Route::get('/', function () {
-    return view('welcome');
-});*/

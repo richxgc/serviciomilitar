@@ -82,18 +82,18 @@
 	</style>
 
 	<p id="p-class">{{ $militant->class }}</p>
-	<p id="p-name">{{ strtoupper($militant->first_name.' '.$militant->last_name_a.' '.$militant->last_name_b) }}</p>
-	<p id="p-birthday">{{ strtoupper($militant->birthday) }}</p>
-	<p id="p-born">{{ strtoupper($militant->born()->first()->city).', '.strtoupper($militant->born()->first()->state) }}</p>
-	<p id="p-father">{{ strtoupper($militant->father()->first()->first_name).' '.strtoupper($militant->father()->first()->last_name_a).' '.strtoupper($militant->father()->first()->last_name_b) }}</p>
-	<p id="p-mother">{{ strtoupper($militant->mother()->first()->first_name).' '.strtoupper($militant->mother()->first()->last_name_a).' '.strtoupper($militant->mother()->first()->last_name_b) }}</p>
-	<p id="p-civil">{{ strtoupper($militant->civil_state) }}</p>
-	<p id="p-occupation">{{ strtoupper($militant->occupation) }}</p>
-	<p id="p-literate">{{ strtoupper($militant->literate) }}</p>
-	<p id="p-curp">{{ strtoupper($militant->curp) }}</p>
-	<p id="p-school">{{ strtoupper($militant->school_degree) }}</p>
-	<p id="p-address">{{ strtoupper($militant->address()->first()->street).' '.strtoupper($militant->address()->first()->number_exterior) }}</p>
-	<p id="p-president">SALVADOR VALLEJO VILLALOBOS</p>
-	<p id="p-date">CHUCANDIRO, MICH., A 18 DE ENERO DEL 2016</p>
+	<p id="p-name">{{ mb_strtoupper($militant->first_name.' '.$militant->last_name_a.' '.$militant->last_name_b) }}</p>
+	<p id="p-birthday">{{ mb_strtoupper($militant->birthday) }}</p>
+	<p id="p-born">{{ mb_strtoupper($militant->born()->first()->city).', '.mb_strtoupper($militant->born()->first()->state) }}</p>
+	<p id="p-father">{{ mb_strtoupper($militant->father()->first()->first_name).' '.mb_strtoupper($militant->father()->first()->last_name_a).' '.mb_strtoupper($militant->father()->first()->last_name_b) }}</p>
+	<p id="p-mother">{{ mb_strtoupper($militant->mother()->first()->first_name).' '.mb_strtoupper($militant->mother()->first()->last_name_a).' '.mb_strtoupper($militant->mother()->first()->last_name_b) }}</p>
+	<p id="p-civil">{{ mb_strtoupper($militant->civil_state) }}</p>
+	<p id="p-occupation">{{ mb_strtoupper($militant->occupation) }}</p>
+	<p id="p-literate">{{ mb_strtoupper($militant->literate) }}</p>
+	<p id="p-curp">{{ mb_strtoupper($militant->curp) }}</p>
+	<p id="p-school">{{ mb_strtoupper($militant->school_degree) }}</p>
+	<p id="p-address">{{ mb_strtoupper($militant->address()->first()->street).' '.mb_strtoupper($militant->address()->first()->number_exterior) }} @if($militant->address()->first()->neighborhood) {{ ', '.mb_strtoupper($militant->address()->first()->neighborhood) }} @endif</p>
+	<p id="p-president">{{ mb_strtoupper($militant->issue_president) }}</p>
+	<p id="p-date">{{ mb_strtoupper($militant->issue_place) }}, A {{ mb_strtoupper($militant->issue_date) }}</p>
 
 @endsection

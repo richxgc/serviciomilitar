@@ -82,11 +82,13 @@ class MilitantController extends Controller {
 			'school_degree' 	=> 'required',
 			'street' 			=> 'required',
 			'number_exterior' 	=> 'required',
-			'neighborhood' 		=> 'required',
 			'postal_code' 		=> 'required',
 			'city' 				=> 'required',
 			'state' 			=> 'required',
 			'country' 			=> 'required',
+			'issue_place' 		=> 'required',
+			'issue_date' 		=> 'required',
+			'issue_president' 	=> 'required',
 		];
 
 		$messages = [
@@ -105,11 +107,13 @@ class MilitantController extends Controller {
 			'school_degree.required' 	=> 'Este campo es requerido',
 			'street.required' 			=> 'Este campo es requerido',
 			'number_exterior.required' 	=> 'Este campo es requerido',
-			'neighborhood.required' 	=> 'Este campo es requerido',
 			'postal_code.required' 		=> 'Este campo es requerido',
 			'city.required' 			=> 'Este campo es requerido',
 			'state.required' 			=> 'Este campo es requerido',
 			'country.required' 			=> 'Este campo es requerido',
+			'issue_place.required' 		=> 'Este campo es requerido',
+			'issue_date.required' 		=> 'Este campo es requerido',
+			'issue_president.required' 	=> 'Este campo es requerido',
 		];
 
 		$validator = Validator::make($post_data, $rules, $messages);
@@ -141,6 +145,9 @@ class MilitantController extends Controller {
 		$militant->occupation 		= trim($request->input('occupation'));
 		$militant->literate 		= trim($request->input('literate'));
 		$militant->school_degree 	= trim($request->input('school_degree'));
+		$militant->issue_place 		= trim($request->input('issue_place'));
+		$militant->issue_date 		= trim($request->input('issue_date'));
+		$militant->issue_president 	= trim($request->input('issue_president'));
 		$militant->save();
 
 		// Set born address
