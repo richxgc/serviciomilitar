@@ -22,7 +22,7 @@ class MilitantController extends Controller {
 	}
 
 	public function index() {
-		$this->response->militants = Militant::orderBy('id', 'desc')->paginate(30);
+		$this->response->militants = Militant::orderBy('id', 'desc')->paginate(50);
 		return view('militants.list', ['response' => $this->response]);
 	}
 
@@ -134,20 +134,23 @@ class MilitantController extends Controller {
 		}
 
 		// Set basic militant data
-		$militant->curp 			= strtoupper(trim($request->input('curp')));
-		$militant->class 			= trim($request->input('class'));
-		$militant->enrollment 		= trim($request->input('enrollment'));
-		$militant->first_name 		= trim($request->input('first_name'));
-		$militant->last_name_a 		= trim($request->input('last_name_a'));
-		$militant->last_name_b 		= trim($request->input('last_name_b'));
-		$militant->birthday 		= trim($request->input('birthday'));
-		$militant->civil_state 		= trim($request->input('civil_state'));
-		$militant->occupation 		= trim($request->input('occupation'));
-		$militant->literate 		= trim($request->input('literate'));
-		$militant->school_degree 	= trim($request->input('school_degree'));
-		$militant->issue_place 		= trim($request->input('issue_place'));
-		$militant->issue_date 		= trim($request->input('issue_date'));
-		$militant->issue_president 	= trim($request->input('issue_president'));
+		$militant->curp 				= strtoupper(trim($request->input('curp')));
+		$militant->class 				= trim($request->input('class'));
+		$militant->enrollment 			= trim($request->input('enrollment'));
+		$militant->first_name 			= trim($request->input('first_name'));
+		$militant->last_name_a 			= trim($request->input('last_name_a'));
+		$militant->last_name_b 			= trim($request->input('last_name_b'));
+		$militant->birthday 			= trim($request->input('birthday'));
+		$militant->civil_state 			= trim($request->input('civil_state'));
+		$militant->occupation 			= trim($request->input('occupation'));
+		$militant->literate 			= trim($request->input('literate'));
+		$militant->school_degree 		= trim($request->input('school_degree'));
+		$militant->issue_place 			= trim($request->input('issue_place'));
+		$militant->issue_date 			= trim($request->input('issue_date'));
+		$militant->issue_president 		= trim($request->input('issue_president'));
+		$militant->passbook_issued 		= trim($request->input('passbook_issued'));
+		$militant->passbook_disabled 	= trim($request->input('passbook_disabled'));
+		$militant->passbook_lost 		= trim($request->input('passbook_lost'));
 		$militant->save();
 
 		// Set born address

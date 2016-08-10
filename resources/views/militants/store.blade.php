@@ -270,6 +270,25 @@
 							<span class="label label-danger">{{ $errors->first('issue_president') }}</span>
 							@endif
 						</div>
+						<p>Estado de la Cartilla</p>
+						<div class="checkbox">
+							<label for="passbook_issued">
+								<input type="checkbox" name="passbook_issued" id="passbook_issued" value="1" @if($response->militant->passbook_issued == '1' || old('passbook_issued') == '1') checked @endif>
+								Expedida
+							</label>
+						</div>
+						<div class="checkbox">
+							<label for="passbook_disabled">
+								<input type="checkbox" name="passbook_disabled" id="passbook_disabled" value="1" @if($response->militant->passbook_disabled == '1' || old('passbook_disabled') == '1') checked @endif>
+								Inutilizada
+							</label>
+						</div>
+						<div class="checkbox">
+							<label for="passbook_lost">
+								<input type="checkbox" name="passbook_lost" id="passbook_lost" value="1" @if($response->militant->passbook_lost == '1' || old('passbook_lost') == '1') checked @endif>
+								Extraviada
+							</label>
+						</div>
 					</div>
 				</div>
 			</div>

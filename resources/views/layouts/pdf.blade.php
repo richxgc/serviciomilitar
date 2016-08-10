@@ -10,6 +10,36 @@
 			margin: 0px;
 			padding: 0px;
 		}
+		table {
+			width: 100%;
+			border-bottom: 1px solid #000;
+		}
+		th {
+			margin: 0px;
+			padding: 5px;
+			border-left: 1px solid #000;
+			border-top: 1px solid #000;
+		}
+		th:last-of-type {
+			border-right: 1px solid #000;	
+		}
+		th.small {
+			width: 1px;
+		}
+		td {
+			margin: 0px;
+			border-left: 1px solid #000;
+			border-top: 1px solid #000;
+		}
+		td:last-of-type {
+			border-right: 1px solid #000;
+		}
+		.text-justify {
+			text-align: justify;
+		}
+		.text-center {
+			text-align: center;
+		}
 		.page-break {
 			page-break-after: always;
 		}
