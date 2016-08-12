@@ -25,7 +25,9 @@
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Formatos <span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="{{ route('listMinutesDraw') }}">Actas de sorteo</a></li>
-							<li><a href="{{ route('listPassbooks') }}">Balance de cartillas</a></li>
+							<li><a href="{{ route('listPassbooks') }}">Balances de cartillas</a></li>
+							<li><a href="{{ route('listInitialLists') }}">Listas de sorteo</a></li>
+							<li><a href="{{ route('listDisabledLost') }}">Inutilización y Extravío</a></li>
 						</ul>
 					</li>
 				@endif

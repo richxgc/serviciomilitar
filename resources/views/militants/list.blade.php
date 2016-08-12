@@ -22,12 +22,17 @@
 		</div>
 		<div class="col-md-12">
 			<br>
+			<span>Codigos de colores:</span>
+			<span class="text-success">Expedida</span> |
+			<span class="text-warning">Inutilizada</span> |
+			<span class="text-danger">Extraviada</span>
 			<div class="table-responsive">
 				<table class="table table-bordered table-striped table-hover table-condensed">
 					<thead>
 						<tr>
 							<th>ID</th>
 							<th>Clase</th>
+							<th>Presenta</th>
 							<th>Matricula</th>
 							<th>CURP</th>
 							<th>Nombre(s)</th>
@@ -41,9 +46,18 @@
 					</thead>
 					<tbody>
 						@foreach($response->militants as $militant)
+						@if($militant->passbook_issued == 1)
+						<tr class="success">
+						@elseif($militant->passbook_disabled == 1)
+						<tr class="warning">
+						@elseif($militant->passbook_lost == 1)
+						<tr class="danger">
+						@else
 						<tr>
+						@endif
 							<td>{{ $militant->id }}</td>
 							<td>{{ $militant->class }}</td>
+							<td>{{ $militant->presented_class }}</td>
 							<td>{{ $militant->enrollment }}</td>
 							<td>{{ $militant->curp }}</td>
 							<td>{{ $militant->first_name }}</td>

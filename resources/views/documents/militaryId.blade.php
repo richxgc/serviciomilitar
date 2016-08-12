@@ -92,8 +92,13 @@
 	<p id="p-literate">{{ mb_strtoupper($militant->literate) }}</p>
 	<p id="p-curp">{{ mb_strtoupper($militant->curp) }}</p>
 	<p id="p-school">{{ mb_strtoupper($militant->school_degree) }}</p>
-	<p id="p-address">{{ mb_strtoupper($militant->address()->first()->street).' '.mb_strtoupper($militant->address()->first()->number_exterior) }} @if($militant->address()->first()->neighborhood) {{ ', '.mb_strtoupper($militant->address()->first()->neighborhood) }} @endif</p>
-	<p id="p-president">{{ mb_strtoupper($militant->issue_president) }}</p>
+	<p id="p-address">
+		@if($militant->address()->first()->neighborhood)
+		{{ mb_strtoupper($militant->address()->first()->street.' '.$militant->address()->first()->number_exterior.', '.$militant->address()->first()->neighborhood) }}
+		@else
+		{{ mb_strtoupper($militant->address()->first()->street.' '.$militant->address()->first()->number_exterior) }}
+		@endif
+	</p>
 	<p id="p-date">{{ mb_strtoupper($militant->issue_place) }}, A {{ mb_strtoupper($militant->issue_date) }}</p>
 
 @endsection

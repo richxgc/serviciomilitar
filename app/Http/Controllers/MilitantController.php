@@ -69,6 +69,9 @@ class MilitantController extends Controller {
 
 		$rules =  [
 			'curp' 				=> 'required|size:18',
+			'class' 			=> 'required',
+			'presented_class' 	=> 'required',
+			'enrollment' 		=> 'required',
 			'first_name' 		=> 'required',
 			'last_name_a' 		=> 'required',
 			'last_name_b' 		=> 'required',
@@ -94,6 +97,9 @@ class MilitantController extends Controller {
 		$messages = [
 			'curp.required' 			=> 'Este campo es requerido',
 			'curp.size' 				=> 'Tu CURP debe tener 18 caracteres',
+			'class.required' 			=> 'Este campo es requerido',
+			'presented_class.required' 	=> 'Este campo es requerido',
+			'enrollment.required' 		=> 'Este campo es requerido',
 			'first_name.required' 		=> 'Este campo es requerido',
 			'last_name_a.required' 		=> 'Este campo es requerido',
 			'last_name_b.required' 		=> 'Este campo es requerido',
@@ -136,6 +142,7 @@ class MilitantController extends Controller {
 		// Set basic militant data
 		$militant->curp 				= strtoupper(trim($request->input('curp')));
 		$militant->class 				= trim($request->input('class'));
+		$militant->presented_class 		= trim($request->input('presented_class'));
 		$militant->enrollment 			= trim($request->input('enrollment'));
 		$militant->first_name 			= trim($request->input('first_name'));
 		$militant->last_name_a 			= trim($request->input('last_name_a'));
@@ -151,6 +158,7 @@ class MilitantController extends Controller {
 		$militant->passbook_issued 		= trim($request->input('passbook_issued'));
 		$militant->passbook_disabled 	= trim($request->input('passbook_disabled'));
 		$militant->passbook_lost 		= trim($request->input('passbook_lost'));
+		$militant->ball 				= trim($request->input('ball'));
 		$militant->save();
 
 		// Set born address

@@ -11,6 +11,8 @@ use App\Http\Requests;
 use App\Models\Militant;
 use App\Models\MinuteDraw;
 use App\Models\Passbook;
+use App\Models\InitialList;
+use App\Models\DisabledLost;
 
 class FormatController extends Controller {
 	
@@ -209,6 +211,164 @@ class FormatController extends Controller {
 	public function deletePassbook($id) {
 		Passbook::destroy($id);
 		return redirect()->route('listPassbooks');
+	}
+
+	public function listInitialLists() {
+		$this->response->lists = InitialList::orderBy('id', 'desc')->paginate(50);
+		return view('formats.listInitialLists', ['response' => $this->response]);
+	}
+
+	public function createInitialList() {
+		$this->response->list = new InitialList();
+		return view('formats.storeInitialList', ['response' => $this->response]);
+	}
+
+	public function editInitialList($id) {
+		$this->response->list = InitialList::find($id);
+		return view('formats.storeInitialList', ['response' => $this->response]);
+	}
+
+	public function storeInitialList(Request $request) {
+		$post_data = $request->all();
+
+		$rules = [
+			'class' 		=> 'required',
+			'local_board' 	=> 'required',
+			'board_place' 	=> 'required',
+			'president' 	=> 'required',
+			'date_place' 	=> 'required',
+		];
+
+		$messages = [
+			'class.required' 		=> 'Este campo es requerido',
+			'local_board.required' 	=> 'Este campo es requerido',
+			'board_place.required' 	=> 'Este campo es requerido',
+			'president.required' 	=> 'Este campo es requerido',
+			'date_place.required' 	=> 'Este campo es requerido',
+		];
+
+		$validator = Validator::make($post_data, $rules, $messages);
+
+		if($validator->fails()) {
+			return back()->withErrors($validator)->withInput($post_data);
+		}
+
+		// Define passbook var
+		$list = null;
+		
+		// Check if data is for new list or an edition of existent
+		$list_id = intval($request->input('list_id'));
+		if($list_id != 0 && $list_id != null) {
+			$list = InitialList::find($list_id);
+		} else {
+			$list = new InitialList();
+		}
+
+		$list->class 			= trim($request->input('class'));
+		$list->local_board 		= trim($request->input('local_board'));
+		$list->board_place 		= trim($request->input('board_place'));
+		$list->president 		= trim($request->input('president'));
+		$list->date_place 		= trim($request->input('date_place'));
+		$list->save();
+
+		return redirect()->route('listInitialLists');
+
+	}
+
+	public function deleteInitialList($id) {
+		InitialList::destroy($id);
+		return redirect()->route('listInitialLists');
+	}
+
+	public function listDisabledLost() {
+		$this->response->docs = DisabledLost::orderBy('id', 'desc')->paginate(50);
+		return view('formats.listDisabledLost', ['response' => $this->response]);
+	}
+
+	public function createDisabledLost() {
+		$this->response->doc = new DisabledLost();
+		return view('formats.storeDisabledLost', ['response' => $this->response]);
+	}
+
+	public function editDisabledLost($id) {
+		$this->response->doc = DisabledLost::find($id);
+		return view('formats.storeDisabledLost', ['response' => $this->response]);
+	}
+
+	public function storeDisabledLost(Request $request) {
+		$post_data = $request->all();
+
+		$rules = [
+			'type' 				=> 'required',
+			'local_board' 		=> 'required',
+			'board_place' 		=> 'required',
+			'place' 			=> 'required',
+			'date' 				=> 'required',
+			'persons_involved' 	=> 'required',
+			'enrollment' 		=> 'required',
+			'militar_zone' 		=> 'required',
+			'class' 			=> 'required',
+			'annotations' 		=> 'required',
+			'head_office' 		=> 'required',
+			'local_office' 		=> 'required',
+			'militar_zone_copy' => 'required',
+		];
+
+		$messages = [
+			'type.required' 				=> 'Este campo es requerido',
+			'local_board.required' 			=> 'Este campo es requerido',
+			'board_place.required' 			=> 'Este campo es requerido',
+			'place.required' 				=> 'Este campo es requerido',
+			'date.required' 				=> 'Este campo es requerido',
+			'persons_involved.required' 	=> 'Este campo es requerido',
+			'enrollment.required' 			=> 'Este campo es requerido',
+			'militar_zone.required' 		=> 'Este campo es requerido',
+			'class.required' 				=> 'Este campo es requerido',
+			'annotations.required' 			=> 'Este campo es requerido',
+			'head_office.required' 			=> 'Este campo es requerido',
+			'local_office.required' 		=> 'Este campo es requerido',
+			'militar_zone_copy.required' 	=> 'Este campo es requerido',
+		];
+
+		$validator = Validator::make($post_data, $rules, $messages);
+
+		if($validator->fails()) {
+			return back()->withErrors($validator)->withInput($post_data);
+		}
+
+		// Define doc var
+		$doc = null;
+		
+		// Check if data is for new doc or an edition of existent
+		$doc_id = intval($request->input('doc_id'));
+		if($doc_id != 0 && $doc_id != null) {
+			$doc = DisabledLost::find($doc_id);
+		} else {
+			$doc = new DisabledLost();
+		}
+
+		$doc->type 				= trim($request->input('type'));
+		$doc->local_board 		= trim($request->input('local_board'));
+		$doc->board_place 		= trim($request->input('board_place'));
+		$doc->place 			= trim($request->input('place'));
+		$doc->date 				= trim($request->input('date'));
+		$doc->persons_involved 	= trim($request->input('persons_involved'));
+		$doc->enrollment 		= trim($request->input('enrollment'));
+		$doc->militar_zone 		= trim($request->input('militar_zone'));
+		$doc->class 			= trim($request->input('class'));
+		$doc->annotations 		= trim($request->input('annotations'));
+		$doc->head_office 		= trim($request->input('head_office'));
+		$doc->local_office 		= trim($request->input('local_office'));
+		$doc->militar_zone_copy = trim($request->input('militar_zone_copy'));
+		$doc->save();
+
+		return redirect()->route('listDisabledLost');
+		
+	}
+
+	public function deleteDisabledLost($id) {
+		DisabledLost::destroy($id);
+		return redirect()->route('listDisabledLost');
 	}
 
 }

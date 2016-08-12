@@ -48,10 +48,27 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('/formatos/balance-cartillas/editar/{id}', ['as' => 'editPassbook', 'uses' => 'FormatController@editPassbook']);
 	Route::post('/formatos/balance-cartillas/guardar', ['as' => 'storePassbook', 'uses' => 'FormatController@storePassbook']);
 	Route::get('/formatos/balance-cartillas/eliminar/{id}', ['as' => 'deletePassbook', 'uses' => 'FormatController@deletePassbook']);
+	Route::get('/formatos/lista-sorteo', ['as' => 'listInitialLists', 'uses' => 'FormatController@listInitialLists']);
+	Route::get('/formatos/lista-sorteo/nuevo', ['as' => 'createInitialList', 'uses' => 'FormatController@createInitialList']);
+	Route::get('/formatos/lista-sorteo/editar/{id}', ['as' => 'editInitialList', 'uses' => 'FormatController@editInitialList']);
+	Route::post('/formatos/lista-sorteo/guardar', ['as' => 'storeInitialList', 'uses' => 'FormatController@storeInitialList']);
+	Route::get('/formatos/lista-sorteo/eliminar/{id}', ['as' => 'deleteInitialList', 'uses' => 'FormatController@deleteInitialList']);
+	Route::get('/formatos/inutilizacion-extravio', ['as' => 'listDisabledLost', 'uses' => 'FormatController@listDisabledLost']);
+	Route::get('/formatos/inutilizacion-extravio/nuevo', ['as' => 'createDisabledLost', 'uses' => 'FormatController@createDisabledLost']);
+	Route::get('/formatos/inutilizacion-extravio/editar/{id}', ['as' => 'editDisabledLost', 'uses' => 'FormatController@editDisabledLost']);
+	Route::post('/formatos/inutilizacion-extravio/guardar', ['as' => 'storeDisabledLost', 'uses' => 'FormatController@storeDisabledLost']);
+	Route::get('/formatos/inutilizacion-extravio/eliminar/{id}', ['as' => 'deleteDisabledLost', 'uses' => 'FormatController@deleteDisabledLost']);
 	
 	// Documents
 	Route::get('/documentos/imprimir/cartilla/{id}', ['as' => 'printMilitaryId', 'uses' => 'DocumentController@printMilitaryId']);
 	Route::get('/documentos/imprimir/actas-sorteo/{id}', ['as' => 'printMinuteDraw', 'uses' => 'DocumentController@printMinuteDraw']);
 	Route::get('/documentos/imprimir/balance-cartillas/{id}', ['as' => 'printPassbook', 'uses' => 'DocumentController@printPassbook']);
-	
+	Route::get('/documentos/imprimir/lista-inicial/{id}', ['as' => 'printInitialList', 'uses' => 'DocumentController@printInitialList']);
+	Route::get('/documentos/imprimir/lista-uno/{id}', ['as' => 'printOneList', 'uses' => 'DocumentController@printOneList']);
+	Route::get('/documentos/imprimir/lista-dos/{id}', ['as' => 'printTwoList', 'uses' => 'DocumentController@printTwoList']);
+	Route::get('/documentos/imprimir/lista-tres/{id}', ['as' => 'printThreeList', 'uses' => 'DocumentController@printThreeList']);
+	Route::get('/documentos/imprimir/inutilizacion/{id}', ['as' => 'printDisabled', 'uses' => 'DocumentController@printDisabled']);
+	Route::get('/documentos/imprimir/extravio/{id}', ['as' => 'printLost', 'uses' => 'DocumentController@printLost']);
+
+
 });

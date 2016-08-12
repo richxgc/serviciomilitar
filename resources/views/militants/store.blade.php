@@ -28,14 +28,21 @@
 											@endif
 										</div>
 										<div class="form-group {{ $errors->has('class') ? ' has-error' : '' }}">
-											<label for="class">Clase</label>
+											<label for="class">Clase<span class="text-danger">*</span></label>
 											<input type="text" name="class" id="class" class="form-control" value="{{ $response->militant->class or old('class') }}">
 											@if($errors->has('class'))
 											<span class="label label-danger">{{ $errors->first('class') }}</span>
 											@endif
 										</div>
+										<div class="form-group {{ $errors->has('presented_class') ? ' has-error' : '' }}">
+											<label for="presented_class">Clase con que presenta<span class="text-danger">*</span></label>
+											<input type="text" name="presented_class" id="presented_class" class="form-control" value="{{ $response->militant->presented_class or old('presented_class') }}">
+											@if($errors->has('presented_class'))
+											<span class="label label-danger">{{ $errors->first('presented_class') }}</span>
+											@endif
+										</div>
 										<div class="form-group {{ $errors->has('enrollment') ? ' has-error' : '' }}">
-											<label for="enrollment">Matrícula</label>
+											<label for="enrollment">Matrícula<span class="text-danger">*</span></label>
 											<input type="text" name="enrollment" id="enrollment" class="form-control" value="{{ $response->militant->enrollment or old('enrollment') }}">
 											@if($errors->has('enrollment'))
 											<span class="label label-danger">{{ $errors->first('enrollment') }}</span>
@@ -287,6 +294,25 @@
 							<label for="passbook_lost">
 								<input type="checkbox" name="passbook_lost" id="passbook_lost" value="1" @if($response->militant->passbook_lost == '1' || old('passbook_lost') == '1') checked @endif>
 								Extraviada
+							</label>
+						</div>
+						<p>Sorteo</p>
+						<div class="radio">
+							<label>
+								<input type="radio" name="ball" id="ball1" value="1" @if($response->militant->ball == '1' || old('ball') == '1') checked @endif>
+								Bola Blanca
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio" name="ball" id="ball" value="2" @if($response->militant->ball == '2' || old('ball') == '2') checked @endif>
+								Bola Negra
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio" name="ball" id="ball3" value="3" @if($response->militant->ball == '3' || old('ball') == '3') checked @endif>
+								Bola Azul
 							</label>
 						</div>
 					</div>

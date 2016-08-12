@@ -34,6 +34,22 @@
 		td:last-of-type {
 			border-right: 1px solid #000;
 		}
+		th.no-padding {
+			padding: 0px;
+		}
+		th > table {
+			border: none;
+		}
+		th > table > thead > tr > th {
+			border-right: none !important;
+			border-top: none !important;
+		}
+		th > table > thead > tr > th:first-of-type {
+			border-left: none !important;
+		}
+		th > table > thead > tr > th.border-bottom {
+			border-bottom: 1px solid #000;
+		}
 		.text-justify {
 			text-align: justify;
 		}
