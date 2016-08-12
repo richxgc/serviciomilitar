@@ -20,6 +20,18 @@
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-md-6">
+										<div class="form-group {{ $errors->has('type') ? ' has-error' : '' }}">
+											<label for="type">Tipo<span class="text-danger">*</span></label>
+											<select name="type" id="type" class="form-control">
+												<option value="">-- Selecciona una opción --</option>
+												<option value="Normal" @if($response->militant->type == 'Normal' or old('type') == 'Normal') selected @endif>Normal (clase)</option>
+												<option value="Anticipado" @if($response->militant->type == 'Anticipado' or old('type') == 'Anticipado') selected @endif>Anticipado</option>
+												<option value="Remiso" @if($response->militant->type == 'Remiso' or old('type') == 'Remiso') selected @endif>Remiso</option>
+											</select>
+											@if($errors->has('type'))
+											<span class="label label-danger">{{ $errors->first('type') }}</span>
+											@endif
+										</div>
 										<div class="form-group {{ $errors->has('curp') ? ' has-error' : '' }}">
 											<label for="curp">CURP<span class="text-danger">*</span></label>
 											<input type="text" name="curp" id="curp" class="form-control" value="{{ $response->militant->curp or old('curp') }}">
@@ -122,9 +134,27 @@
 										</div>
 										<div class="form-group {{ $errors->has('school_degree') ? ' has-error' : '' }}">
 											<label for="school_degree">Grado de estudios<span class="text-danger">*</span></label>
-											<input type="text" name="school_degree" id="school_degree" class="form-control" value="{{ $response->militant->school_degree or old('school_degree') }}">
+											<select name="school_degree" id="school_degree" class="form-control">
+												<option value="">-- Selecciona el grado --</option>
+												<option value="Analfabeta" @if($response->militant->school_degree == 'Analfabeta' or old('school_degree') == 'Analfabeta') selected @endif>Analfabeta</option>
+												<option value="Primaria" @if($response->militant->school_degree == 'Primaria' or old('school_degree') == 'Primaria') selected @endif>Primaria</option>
+												<option value="Secundaria" @if($response->militant->school_degree == 'Secundaria' or old('school_degree') == 'Secundaria') selected @endif>Secundaria</option>
+												<option value="Bachillerato" @if($response->militant->school_degree == 'Bachillerato' or old('school_degree') == 'Bachillerato') selected @endif>Bachillerato</option>
+												<option value="Licenciatura" @if($response->militant->school_degree == 'Licenciatura' or old('school_degree') == 'Licenciatura') selected @endif>Licenciatura</option>
+											</select>
 											@if($errors->has('school_degree'))
 											<span class="label label-danger">{{ $errors->first('school_degree') }}</span>
+											@endif
+										</div>
+										<div class="form-group {{ $errors->has('nationality') ? ' has-error' : '' }}">
+											<label for="nationality">Mexicano por<span class="text-danger">*</span></label>
+											<select name="nationality" id="nationality" class="form-control">
+												<option value="">-- Selecciona una opción --</option>
+												<option value="Nacimiento" @if($response->militant->nationality == 'Nacimiento' or old('nationality') == 'Nacimiento') selected @endif>Nacimiento</option>
+												<option value="Naturalizacion" @if($response->militant->nationality == 'Naturalizacion' or old('nationality') == 'Naturalizacion') selected @endif>Naturalización</option>
+											</select>
+											@if($errors->has('nationality'))
+											<span class="label label-danger">{{ $errors->first('nationality') }}</span>
 											@endif
 										</div>
 									</div>

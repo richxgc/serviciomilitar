@@ -92,6 +92,8 @@ class MilitantController extends Controller {
 			'issue_place' 		=> 'required',
 			'issue_date' 		=> 'required',
 			'issue_president' 	=> 'required',
+			'type' 				=> 'required',
+			'nationality' 		=> 'required',
 		];
 
 		$messages = [
@@ -120,6 +122,8 @@ class MilitantController extends Controller {
 			'issue_place.required' 		=> 'Este campo es requerido',
 			'issue_date.required' 		=> 'Este campo es requerido',
 			'issue_president.required' 	=> 'Este campo es requerido',
+			'type.required' 			=> 'Este campo es requerido',
+			'nationality.required' 		=> 'Este campo es requerido',
 		];
 
 		$validator = Validator::make($post_data, $rules, $messages);
@@ -159,6 +163,8 @@ class MilitantController extends Controller {
 		$militant->passbook_disabled 	= trim($request->input('passbook_disabled'));
 		$militant->passbook_lost 		= trim($request->input('passbook_lost'));
 		$militant->ball 				= trim($request->input('ball'));
+		$militant->type 				= trim($request->input('type'));
+		$militant->nationality 			= trim($request->input('nationality'));
 		$militant->save();
 
 		// Set born address
