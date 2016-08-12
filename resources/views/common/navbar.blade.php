@@ -29,6 +29,7 @@
 							<li><a href="{{ route('listInitialLists') }}">Listas de sorteo</a></li>
 							<li><a href="{{ route('listDisabledLost') }}">Inutilización y extravío</a></li>
 							<li><a href="{{ route('listRegisterBooks') }}">Libros de registro</a></li>
+							<li><a href="{{ route('listReports') }}">Reportes mensual/anual</a></li>
 						</ul>
 					</li>
 				@endif

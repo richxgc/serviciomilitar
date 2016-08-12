@@ -14,6 +14,7 @@ use App\Models\Passbook;
 use App\Models\InitialList;
 use App\Models\DisabledLost;
 use App\Models\RegisterBook;
+use App\Models\Report;
 
 class FormatController extends Controller {
 	
@@ -22,10 +23,11 @@ class FormatController extends Controller {
 	public function __construct() {
 		$this->response = new \stdClass();
 		$this->response->success = true;
+		$this->response->paginate = 50;
 	}
 
 	public function listMinutesDraw() {
-		$this->response->minutes = MinuteDraw::orderBy('id', 'desc')->paginate(50);
+		$this->response->minutes = MinuteDraw::orderBy('id', 'desc')->paginate($this->response->paginate);
 		return view('formats.listMinutesDraw', ['response' => $this->response]);
 	}
 
@@ -118,7 +120,7 @@ class FormatController extends Controller {
 	}
 
 	public function listPassbooks() {
-		$this->response->passbooks = Passbook::orderBy('id', 'desc')->paginate(50);
+		$this->response->passbooks = Passbook::orderBy('id', 'desc')->paginate($this->response->paginate);
 		return view('formats.listPassbooks', ['response' => $this->response]);
 	}
 
@@ -215,7 +217,7 @@ class FormatController extends Controller {
 	}
 
 	public function listInitialLists() {
-		$this->response->lists = InitialList::orderBy('id', 'desc')->paginate(50);
+		$this->response->lists = InitialList::orderBy('id', 'desc')->paginate($this->response->paginate);
 		return view('formats.listInitialLists', ['response' => $this->response]);
 	}
 
@@ -282,7 +284,7 @@ class FormatController extends Controller {
 	}
 
 	public function listDisabledLost() {
-		$this->response->docs = DisabledLost::orderBy('id', 'desc')->paginate(50);
+		$this->response->docs = DisabledLost::orderBy('id', 'desc')->paginate($this->response->paginate);
 		return view('formats.listDisabledLost', ['response' => $this->response]);
 	}
 
@@ -374,7 +376,7 @@ class FormatController extends Controller {
 
 
 	public function listRegisterBooks() {
-		$this->response->books = RegisterBook::orderBy('id', 'desc')->paginate(50);
+		$this->response->books = RegisterBook::orderBy('id', 'desc')->paginate($this->response->paginate);
 		return view('formats.listRegisterBooks', ['response' => $this->response]);
 	}
 
@@ -439,6 +441,77 @@ class FormatController extends Controller {
 		return redirect()->route('listRegisterBooks');
 	}
 
+	public function listReports() {
+		$this->response->reports = Report::orderBy('id', 'desc')->paginate($this->response->paginate);
+		return view('formats.listReports', ['response' => $this->response]);
+	}
+
+	public function createReport() {
+		$this->response->report = new Report();
+		return view('formats.storeReport', ['response' => $this->response]);
+	}
+
+	public function editReport($id) {
+		$this->response->report = Report::find($id);
+		return view('formats.storeReport', ['response' => $this->response]);
+	}
+
+	public function storeReport(Request $request) {
+		$post_data = $request->all();
+
+		$rules = [
+			'class' 		=> 'required',
+			'local_board' 	=> 'required',
+			'board_place' 	=> 'required',
+			'president' 	=> 'required',
+			'date_place' 	=> 'required',
+			'start' 		=> 'required',
+			'end' 			=> 'required',
+		];
+
+		$messages = [
+			'class.required' 		=> 'Este campo es requerido',
+			'local_board.required' 	=> 'Este campo es requerido',
+			'board_place.required' 	=> 'Este campo es requerido',
+			'president.required' 	=> 'Este campo es requerido',
+			'date_place.required' 	=> 'Este campo es requerido',
+			'start' 				=> 'Este campo es requerido',
+			'end' 					=> 'Este campo es requerido',
+		];
+
+		$validator = Validator::make($post_data, $rules, $messages);
+
+		if($validator->fails()) {
+			return back()->withErrors($validator)->withInput($post_data);
+		}
+
+		// Define passbook var
+		$report = null;
+		
+		// Check if data is for new report or an edition of existent
+		$report_id = intval($request->input('report_id'));
+		if($report_id != 0 && $report_id != null) {
+			$report = Report::find($report_id);
+		} else {
+			$report = new Report();
+		}
+
+		$report->class 			= trim($request->input('class'));
+		$report->local_board 	= trim($request->input('local_board'));
+		$report->board_place 	= trim($request->input('board_place'));
+		$report->president 		= trim($request->input('president'));
+		$report->date_place 	= trim($request->input('date_place'));
+		$report->start 			= trim($request->input('start'));
+		$report->end 			= trim($request->input('end'));
+		$report->save();
+
+		return redirect()->route('listReports');
+	}
+
+	public function deleteReport($id) {
+		Report::destroy($id);
+		return redirect()->route('listReports');
+	}
 
 }
 

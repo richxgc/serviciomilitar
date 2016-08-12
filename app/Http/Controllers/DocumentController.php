@@ -17,6 +17,7 @@ use App\Models\Passbook;
 use App\Models\InitialList;
 use App\Models\DisabledLost;
 use App\Models\RegisterBook;
+use App\Models\Report;
 
 class DocumentController extends Controller {
 	
@@ -167,6 +168,103 @@ class DocumentController extends Controller {
 		// Print pdf
 		$pdf = PDF::loadView('documents.registerBook', ['response' => $this->response])->setPaper('a4', 'landscape');
 		return $pdf->stream();
+	}
+
+
+	public function printReport($id) {
+		$this->response->report = Report::find($id);
+		if(!$this->response->report) {
+			abort(404, '¡No existe el reporte!');
+		}
+
+		/*$this->response->militants = Militant::where('presented_class', $this->response->report->class)->whereBetween('created_at',[$this->response->report->start, $this->response->report->end])->get();*/
+		//dd($this->response->report->start);
+
+		$start 	= intval(substr($this->response->report->start, 5, 2));
+		$end 	= intval(substr($this->response->report->end, 5, 2));
+		$year   = intval(substr($this->response->report->start, 0, 10));
+		$day_start = substr($this->response->report->start, 8, 2);
+		$day_end = substr($this->response->report->end, 8, 2);
+		$months = array();
+		for($i = $start; $i <= $end; $i++) {
+			$query_start 	= null;
+			$query_end 		= null;
+			// Get start of query for each month
+			if($i == $start) {
+				if($i <= 9) {
+					$query_start = $year.'-0'.$i.'-'.$day_start;
+				} else {
+					$query_start = $year.'-'.$i.'-'.$day_start;
+				}
+				
+			} else {
+				if($i <= 9) {
+					$query_start = $year.'-0'.$i.'-01';
+				} else {
+					$query_start = $year.'-'.$i.'-01';
+				}
+				
+			}
+			// Get end of query for each month
+			if($i == $end) {
+				if($i <= 9) {
+					$query_end = $year.'-0'.$i.'-'.$day_end;
+				} else {
+					$query_end = $year.'-'.$i.'-'.$day_end;
+				}
+				
+			} else {
+				if($i <= 9) {
+					$query_end = $year.'-0'.$i.'-31';
+				} else {
+					$query_end = $year.'-'.$i.'-31';
+				}
+				
+			}
+			switch ($i) {
+				case 1:
+					array_push($months, array('month' => 'Enero', 'start' => $query_start, 'end' => $query_end));
+					break;
+				case 2:
+					array_push($months, array('month' => 'Febrero', 'start' => $query_start, 'end' => $query_end));
+					break;
+				case 3:
+					array_push($months, array('month' => 'Marzo', 'start' => $query_start, 'end' => $query_end));
+					break;
+				case 4:
+					array_push($months, array('month' => 'Abril', 'start' => $query_start, 'end' => $query_end));
+					break;
+				case 5:
+					array_push($months, array('month' => 'Mayo', 'start' => $query_start, 'end' => $query_end));
+					break;
+				case 6:
+					array_push($months, array('month' => 'Junio', 'start' => $query_start, 'end' => $query_end));
+					break;
+				case 7:
+					array_push($months, array('month' => 'Julio', 'start' => $query_start, 'end' => $query_end));
+					break;
+				case 8:
+					array_push($months, array('month' => 'Agosto', 'start' => $query_start, 'end' => $query_end));
+					break;
+				case 9:
+					array_push($months, array('month' => 'Septiembre', 'start' => $query_start, 'end' => $query_end));
+					break;
+				case 10:
+					array_push($months, array('month' => 'Octubre', 'start' => $query_start, 'end' => $query_end));
+					break;
+				case 11:
+					array_push($months, array('month' => 'Noviembre', 'start' => $query_start, 'end' => $query_end));
+					break;
+				case 12:
+					array_push($months, array('month' => 'Diciembre', 'start' => $query_start, 'end' => $query_end));
+					break;
+				default:
+					break;
+			}
+		}
+
+		dd($months);
+
 	}
 
 }
