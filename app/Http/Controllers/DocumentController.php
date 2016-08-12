@@ -16,6 +16,7 @@ use App\Models\MinuteDraw;
 use App\Models\Passbook;
 use App\Models\InitialList;
 use App\Models\DisabledLost;
+use App\Models\RegisterBook;
 
 class DocumentController extends Controller {
 	
@@ -149,6 +150,22 @@ class DocumentController extends Controller {
 			abort(404, '¡No existe el acta de extravío!');
 		}
 		$pdf = PDF::loadView('documents.lost', ['response' => $this->response]);
+		return $pdf->stream();
+	}
+
+	public function printRegisterBook($id) {
+		$this->response->book = RegisterBook::find($id);
+		if(!$this->response->book) {
+			abort(404, '¡No existe el libro de registro!');
+		}
+		// Get militants for the class of book
+		$this->response->militants = Militant::where('presented_class', $this->response->book->class)->where('ball', '1')->orWhere('ball', '3')->get();
+		if(sizeof($this->response->militants) <= 0) {
+			abort(404, '!No hay militantes para realizar la lista inicial de sorteo!');
+		}
+
+		// Print pdf
+		$pdf = PDF::loadView('documents.registerBook', ['response' => $this->response])->setPaper('a4', 'landscape');
 		return $pdf->stream();
 	}
 

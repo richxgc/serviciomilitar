@@ -27,7 +27,8 @@
 							<li><a href="{{ route('listMinutesDraw') }}">Actas de sorteo</a></li>
 							<li><a href="{{ route('listPassbooks') }}">Balances de cartillas</a></li>
 							<li><a href="{{ route('listInitialLists') }}">Listas de sorteo</a></li>
-							<li><a href="{{ route('listDisabledLost') }}">Inutilización y Extravío</a></li>
+							<li><a href="{{ route('listDisabledLost') }}">Inutilización y extravío</a></li>
+							<li><a href="{{ route('listRegisterBooks') }}">Libros de registro</a></li>
 						</ul>
 					</li>
 				@endif

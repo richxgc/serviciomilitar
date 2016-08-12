@@ -58,6 +58,11 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('/formatos/inutilizacion-extravio/editar/{id}', ['as' => 'editDisabledLost', 'uses' => 'FormatController@editDisabledLost']);
 	Route::post('/formatos/inutilizacion-extravio/guardar', ['as' => 'storeDisabledLost', 'uses' => 'FormatController@storeDisabledLost']);
 	Route::get('/formatos/inutilizacion-extravio/eliminar/{id}', ['as' => 'deleteDisabledLost', 'uses' => 'FormatController@deleteDisabledLost']);
+	Route::get('/formatos/libro-registro', ['as' => 'listRegisterBooks', 'uses' => 'FormatController@listRegisterBooks']);
+	Route::get('/formatos/libro-registro/nuevo', ['as' => 'createRegisterBook', 'uses' => 'FormatController@createRegisterBook']);
+	Route::get('/formatos/libro-registro/editar/{id}', ['as' => 'editRegisterBook', 'uses' => 'FormatController@editRegisterBook']);
+	Route::post('/formatos/libro-registro/guardar', ['as' => 'storeRegisterBook', 'uses' => 'FormatController@storeRegisterBook']);
+	Route::get('/formatos/libro-registro/eliminar/{id}', ['as' => 'deleteRegisterBook', 'uses' => 'FormatController@deleteRegisterBook']);
 	
 	// Documents
 	Route::get('/documentos/imprimir/cartilla/{id}', ['as' => 'printMilitaryId', 'uses' => 'DocumentController@printMilitaryId']);
@@ -69,6 +74,7 @@ Route::group(['middleware' => ['auth']], function() {
 	Route::get('/documentos/imprimir/lista-tres/{id}', ['as' => 'printThreeList', 'uses' => 'DocumentController@printThreeList']);
 	Route::get('/documentos/imprimir/inutilizacion/{id}', ['as' => 'printDisabled', 'uses' => 'DocumentController@printDisabled']);
 	Route::get('/documentos/imprimir/extravio/{id}', ['as' => 'printLost', 'uses' => 'DocumentController@printLost']);
+	Route::get('/documentos/imprimir/libro-registro/{id}', ['as' => 'printRegisterBook', 'uses' => 'DocumentController@printRegisterBook']);
 
 
 });

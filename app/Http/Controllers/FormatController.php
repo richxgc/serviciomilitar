@@ -13,6 +13,7 @@ use App\Models\MinuteDraw;
 use App\Models\Passbook;
 use App\Models\InitialList;
 use App\Models\DisabledLost;
+use App\Models\RegisterBook;
 
 class FormatController extends Controller {
 	
@@ -370,6 +371,74 @@ class FormatController extends Controller {
 		DisabledLost::destroy($id);
 		return redirect()->route('listDisabledLost');
 	}
+
+
+	public function listRegisterBooks() {
+		$this->response->books = RegisterBook::orderBy('id', 'desc')->paginate(50);
+		return view('formats.listRegisterBooks', ['response' => $this->response]);
+	}
+
+	public function createRegisterBook() {
+		$this->response->book = new RegisterBook();
+		return view('formats.storeRegisterBook', ['response' => $this->response]);
+	}
+
+	public function editRegisterBook($id) {
+		$this->response->book = RegisterBook::find($id);
+		return view('formats.storeRegisterBook', ['response' => $this->response]);
+	}
+
+	public function storeRegisterBook(Request $request) {
+		$post_data = $request->all();
+
+		$rules = [
+			'class' 		=> 'required',
+			'local_board' 	=> 'required',
+			'board_place' 	=> 'required',
+			'president' 	=> 'required',
+			'date_place' 	=> 'required',
+		];
+
+		$messages = [
+			'class.required' 		=> 'Este campo es requerido',
+			'local_board.required' 	=> 'Este campo es requerido',
+			'board_place.required' 	=> 'Este campo es requerido',
+			'president.required' 	=> 'Este campo es requerido',
+			'date_place.required' 	=> 'Este campo es requerido',
+		];
+
+		$validator = Validator::make($post_data, $rules, $messages);
+
+		if($validator->fails()) {
+			return back()->withErrors($validator)->withInput($post_data);
+		}
+
+		// Define passbook var
+		$book = null;
+		
+		// Check if data is for new book or an edition of existent
+		$book_id = intval($request->input('book_id'));
+		if($book_id != 0 && $book_id != null) {
+			$book = RegisterBook::find($book_id);
+		} else {
+			$book = new RegisterBook();
+		}
+
+		$book->class 			= trim($request->input('class'));
+		$book->local_board 		= trim($request->input('local_board'));
+		$book->board_place 		= trim($request->input('board_place'));
+		$book->president 		= trim($request->input('president'));
+		$book->date_place 		= trim($request->input('date_place'));
+		$book->save();
+
+		return redirect()->route('listRegisterBooks');
+	}
+
+	public function deleteRegisterBook($id) {
+		RegisterBook::destroy($id);
+		return redirect()->route('listRegisterBooks');
+	}
+
 
 }
 
