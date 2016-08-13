@@ -27,8 +27,8 @@
 				<th class="text-center">No<br>PROG.</th>
 				<th class="text-center">MATRÍCULA.</th>
 				<th class="text-center">NOMBRE (S) Y APELLIDOS PATERNO Y MATERNO.</th>
-				<th class="text-center">FECHA DE NACIMIENTO</th>
-				<th class="text-center">LUGAR DE NACIMIENTO (COMPLETO)</th>
+				<th class="text-center">FECHA DE NACIMIENTO.</th>
+				<th class="text-center">LUGAR DE NACIMIENTO (COMPLETO).</th>
 				<th class="text-center">C.U.R.P</th>
 				<th colspan="2" class="no-padding">
 					<table cellspacing="0">

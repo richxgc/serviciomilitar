@@ -177,15 +177,14 @@ class DocumentController extends Controller {
 			abort(404, '¡No existe el reporte!');
 		}
 
-		/*$this->response->militants = Militant::where('presented_class', $this->response->report->class)->whereBetween('created_at',[$this->response->report->start, $this->response->report->end])->get();*/
-		//dd($this->response->report->start);
-
+		// Get dates of report
 		$start 	= intval(substr($this->response->report->start, 5, 2));
 		$end 	= intval(substr($this->response->report->end, 5, 2));
 		$year   = intval(substr($this->response->report->start, 0, 10));
 		$day_start = substr($this->response->report->start, 8, 2);
 		$day_end = substr($this->response->report->end, 8, 2);
 		$months = array();
+		// Set result
 		for($i = $start; $i <= $end; $i++) {
 			$query_start 	= null;
 			$query_end 		= null;
@@ -214,57 +213,180 @@ class DocumentController extends Controller {
 				}
 				
 			} else {
+				$last_day = null;
+				switch ($i) {
+					case 1:
+						$last_day = 31;
+						break;
+					case 2:
+						$last_day = 29;
+						break;
+					case 3:
+						$last_day = 31;
+						break;
+					case 4:
+						$last_day = 30;
+						break;
+					case 5:
+						$last_day = 31;
+						break;
+					case 6:
+						$last_day = 30;
+						break;
+					case 7:
+						$last_day = 31;
+						break;
+					case 8:
+						$last_day = 31;
+						break;
+					case 9:
+						$last_day = 30;
+						break;
+					case 10:
+						$last_day = 31;
+						break;
+					case 11:
+						$last_day = 30;
+						break;
+					case 12:
+						$last_day = 31;
+						break;
+					default:
+						$last_day = 31;
+						break;
+				}
 				if($i <= 9) {
-					$query_end = $year.'-0'.$i.'-31';
+					$query_end = $year.'-0'.$i.'-'.$last_day;
 				} else {
-					$query_end = $year.'-'.$i.'-31';
+					$query_end = $year.'-'.$i.'-'.$last_day;
 				}
 				
 			}
+
+			$classes = array('normales' => array(), 'anticipados' => array(), 'remisos' => array());
+			foreach ($classes as $key => &$value) {
+				$militants = null;
+				$degrees = array('analfabeta' => 0, 'primaria' => 0, 'secundaria' => 0, 'bachillerato' => 0, 'licenciatura' => 0, 'subtotal' => 0);
+				if($key == 'normales') {
+					$militants = Militant::select(DB::raw('count(*) as count, school_degree'))->where('type', 'Normal')->where('presented_class', $this->response->report->class)->whereBetween('created_at',[$query_start, $query_end])->groupBy('school_degree')->get();
+				} elseif($key == 'anticipados') {
+					$militants = Militant::select(DB::raw('count(*) as count, school_degree'))->where('type', 'Anticipado')->where('presented_class', $this->response->report->class)->whereBetween('created_at',[$query_start, $query_end])->groupBy('school_degree')->get();
+				} elseif($key == 'remisos') {
+					$militants = Militant::select(DB::raw('count(*) as count, school_degree'))->where('type', 'Remiso')->where('presented_class', $this->response->report->class)->whereBetween('created_at',[$query_start, $query_end])->groupBy('school_degree')->get();
+				}
+				foreach($militants as $militant) {
+					if($militant->school_degree == 'Analfabeta') {
+						$degrees['analfabeta'] = $militant->count;
+					} elseif($militant->school_degree == 'Primaria') {
+						$degrees['primaria'] = $militant->count;
+					} elseif($militant->school_degree == 'Secundaria') {
+						$degrees['secundaria'] = $militant->count;
+					} elseif($militant->school_degree == 'Bachillerato') {
+						$degrees['bachillerato'] = $militant->count;
+					} elseif($militant->school_degree == 'Licenciatura') {
+						$degrees['licenciatura'] = $militant->count;
+					}
+					$degrees['subtotal'] += $militant->count;
+				}
+				$value = $degrees;
+				
+			}
+
+			// Get totals
+			$total_a = $classes['normales']['analfabeta'] + $classes['anticipados']['analfabeta'] + $classes['remisos']['analfabeta'];
+			$total_b = $classes['normales']['primaria'] + $classes['anticipados']['primaria'] + $classes['remisos']['primaria'];
+			$total_c = $classes['normales']['secundaria'] + $classes['anticipados']['secundaria'] + $classes['remisos']['secundaria'];
+			$total_d = $classes['normales']['bachillerato'] + $classes['anticipados']['bachillerato'] + $classes['remisos']['bachillerato'];
+			$total_e = $classes['normales']['licenciatura'] + $classes['anticipados']['licenciatura'] + $classes['remisos']['licenciatura'];
+			$total = $classes['normales']['subtotal'] + $classes['anticipados']['subtotal'] + $classes['remisos']['subtotal'];
+			$classes['totals'] = array('analfabeta' => $total_a, 'primaria' => $total_b, 'secundaria' => $total_c, 'bachillerato' => $total_d, 'licenciatura' => $total_e, 'total' => $total);
+
 			switch ($i) {
 				case 1:
-					array_push($months, array('month' => 'Enero', 'start' => $query_start, 'end' => $query_end));
+					array_push($months, array('month' => 'Enero', 'start' => $query_start, 'end' => $query_end, 'classes' => $classes));
 					break;
 				case 2:
-					array_push($months, array('month' => 'Febrero', 'start' => $query_start, 'end' => $query_end));
+					array_push($months, array('month' => 'Febrero', 'start' => $query_start, 'end' => $query_end, 'classes' => $classes));
 					break;
 				case 3:
-					array_push($months, array('month' => 'Marzo', 'start' => $query_start, 'end' => $query_end));
+					array_push($months, array('month' => 'Marzo', 'start' => $query_start, 'end' => $query_end, 'classes' => $classes));
 					break;
 				case 4:
-					array_push($months, array('month' => 'Abril', 'start' => $query_start, 'end' => $query_end));
+					array_push($months, array('month' => 'Abril', 'start' => $query_start, 'end' => $query_end, 'classes' => $classes));
 					break;
 				case 5:
-					array_push($months, array('month' => 'Mayo', 'start' => $query_start, 'end' => $query_end));
+					array_push($months, array('month' => 'Mayo', 'start' => $query_start, 'end' => $query_end, 'classes' => $classes));
 					break;
 				case 6:
-					array_push($months, array('month' => 'Junio', 'start' => $query_start, 'end' => $query_end));
+					array_push($months, array('month' => 'Junio', 'start' => $query_start, 'end' => $query_end, 'classes' => $classes));
 					break;
 				case 7:
-					array_push($months, array('month' => 'Julio', 'start' => $query_start, 'end' => $query_end));
+					array_push($months, array('month' => 'Julio', 'start' => $query_start, 'end' => $query_end, 'classes' => $classes));
 					break;
 				case 8:
-					array_push($months, array('month' => 'Agosto', 'start' => $query_start, 'end' => $query_end));
+					array_push($months, array('month' => 'Agosto', 'start' => $query_start, 'end' => $query_end, 'classes' => $classes));
 					break;
 				case 9:
-					array_push($months, array('month' => 'Septiembre', 'start' => $query_start, 'end' => $query_end));
+					array_push($months, array('month' => 'Septiembre', 'start' => $query_start, 'end' => $query_end, 'classes' => $classes));
 					break;
 				case 10:
-					array_push($months, array('month' => 'Octubre', 'start' => $query_start, 'end' => $query_end));
+					array_push($months, array('month' => 'Octubre', 'start' => $query_start, 'end' => $query_end, 'classes' => $classes));
 					break;
 				case 11:
-					array_push($months, array('month' => 'Noviembre', 'start' => $query_start, 'end' => $query_end));
+					array_push($months, array('month' => 'Noviembre', 'start' => $query_start, 'end' => $query_end, 'classes' => $classes));
 					break;
 				case 12:
-					array_push($months, array('month' => 'Diciembre', 'start' => $query_start, 'end' => $query_end));
+					array_push($months, array('month' => 'Diciembre', 'start' => $query_start, 'end' => $query_end, 'classes' => $classes));
 					break;
 				default:
 					break;
 			}
 		}
 
-		dd($months);
+		// Get totals
+		$anual = array('normales' => array(), 'anticipados' => array(), 'remisos' => array());
+		foreach($anual as $key => &$value) {
+			$militants = null;
+			$degrees = array('analfabeta' => 0, 'primaria' => 0, 'secundaria' => 0, 'bachillerato' => 0, 'licenciatura' => 0, 'subtotal' => 0);
+			if($key == 'normales') {
+				$militants = Militant::select(DB::raw('count(*) as count, school_degree'))->where('type', 'Normal')->where('presented_class', $this->response->report->class)->whereBetween('created_at',[$this->response->report->start, $this->response->report->end])->groupBy('school_degree')->get();
+			} elseif($key == 'anticipados') {
+				$militants = Militant::select(DB::raw('count(*) as count, school_degree'))->where('type', 'Anticipado')->where('presented_class', $this->response->report->class)->whereBetween('created_at',[$this->response->report->start, $this->response->report->end])->groupBy('school_degree')->get();
+			} elseif($key == 'remisos') {
+				$militants = Militant::select(DB::raw('count(*) as count, school_degree'))->where('type', 'Remiso')->where('presented_class', $this->response->report->class)->whereBetween('created_at',[$this->response->report->start, $this->response->report->end])->groupBy('school_degree')->get();
+			}
+			foreach($militants as $militant) {
+				if($militant->school_degree == 'Analfabeta') {
+					$degrees['analfabeta'] = $militant->count;
+				} elseif($militant->school_degree == 'Primaria') {
+					$degrees['primaria'] = $militant->count;
+				} elseif($militant->school_degree == 'Secundaria') {
+					$degrees['secundaria'] = $militant->count;
+				} elseif($militant->school_degree == 'Bachillerato') {
+					$degrees['bachillerato'] = $militant->count;
+				} elseif($militant->school_degree == 'Licenciatura') {
+					$degrees['licenciatura'] = $militant->count;
+				}
+				$degrees['subtotal'] += $militant->count;
+			}
+			$value = $degrees;
+		}
+		$total_a = $anual['normales']['analfabeta'] + $anual['anticipados']['analfabeta'] + $anual['remisos']['analfabeta'];
+		$total_b = $anual['normales']['primaria'] + $anual['anticipados']['primaria'] + $anual['remisos']['primaria'];
+		$total_c = $anual['normales']['secundaria'] + $anual['anticipados']['secundaria'] + $anual['remisos']['secundaria'];
+		$total_d = $anual['normales']['bachillerato'] + $anual['anticipados']['bachillerato'] + $anual['remisos']['bachillerato'];
+		$total_e = $anual['normales']['licenciatura'] + $anual['anticipados']['licenciatura'] + $anual['remisos']['licenciatura'];
+		$total = $anual['normales']['subtotal'] + $anual['anticipados']['subtotal'] + $anual['remisos']['subtotal'];
+		$anual['totals'] = array('analfabeta' => $total_a, 'primaria' => $total_b, 'secundaria' => $total_c, 'bachillerato' => $total_d, 'licenciatura' => $total_e, 'total' => $total);
+		
+		// Set reponse of months and anual
+		$this->response->months = $months;
+		$this->response->anual = $anual;
 
+		// Print pdf
+		//return view('documents.report', ['response' => $this->response]);
+		$pdf = PDF::loadView('documents.report', ['response' => $this->response])->setPaper('a4', 'landscape');
+		return $pdf->stream();
 	}
 
 }
