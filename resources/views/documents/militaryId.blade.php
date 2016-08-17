@@ -6,7 +6,7 @@
 		body {
 			font-size: 8pt;
 			font-weight: bold;
-			margin-top: -22px;
+			margin-top: 3px;
 		}
 		p {
 			height: 8px;
@@ -26,11 +26,11 @@
 			margin-left: 334px;	
 		}
 		#p-born {
-			margin-top: 7px;
+			margin-top: 8px;
 			margin-left: 253px;		
 		}
 		#p-father {
-			margin-top: 15px;
+			margin-top: 14px;
 			margin-left: 248px;
 		}
 		#p-mother {
@@ -38,11 +38,11 @@
 			margin-left: 233px;
 		}
 		#p-civil {
-			margin-top: 7px;
+			margin-top: 8px;
 			margin-left: 285px;	
 		}
 		#p-occupation {
-			margin-top: 15px;
+			margin-top: 14px;
 			margin-left: 263px;	
 		}
 		#p-literate {
@@ -51,7 +51,7 @@
 			padding: 0px;
 			height: 2px;
 			float: left;
-			margin-top: 0px;
+			margin-top: 3px;
 			margin-left: 358px;
 			width: 7px;
 		}
@@ -68,11 +68,11 @@
 			margin-left: 377px;
 		}
 		#p-address {
-			margin-top: 15px;
+			margin-top: 14px;
 			margin-left: 258px;
 		}
 		#p-president {
-			margin-top: 131px;
+			margin-top: 128px;
 			margin-left: 175px;
 		}
 		#p-date {
@@ -99,6 +99,7 @@
 		{{ mb_strtoupper($militant->address()->first()->street.' '.$militant->address()->first()->number_exterior) }}
 		@endif
 	</p>
+	<p id="p-president">{{ mb_strtoupper($militant->issue_president) }}</p>
 	<p id="p-date">{{ mb_strtoupper($militant->issue_place) }}, A {{ mb_strtoupper($militant->issue_date) }}</p>
 
 @endsection
